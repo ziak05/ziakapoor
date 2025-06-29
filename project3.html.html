@@ -1,0 +1,131 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calculator</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+      font-family: 'Roboto Mono', monospace;
+    }
+    .calculator {
+      background-color: #2196F3;
+      border-radius: 48px;
+      padding: 24px;
+      width: 320px;
+      box-sizing: border-box;
+      user-select: none;
+    }
+    .display {
+      background-color: #DFF2FF;
+      border-radius: 12px;
+      height: 64px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding-right: 24px;
+      font-size: 64px;
+      color: black;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    button {
+      background-color: #1565C0;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 48px;
+      font-weight: 600;
+      padding: 16px 0;
+      cursor: pointer;
+      line-height: 1;
+      transition: background-color 0.2s ease;
+    }
+    button:active {
+      background-color: #0d3c75;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator" role="region" aria-label="Calculator">
+    <div id="display" class="display" aria-live="polite" aria-atomic="true">0</div>
+    <div class="buttons">
+      <button data-value="7">7</button>
+      <button data-value="8">8</button>
+      <button data-value="9">9</button>
+      <button data-value="+">+</button>
+
+      <button data-value="4">4</button>
+      <button data-value="5">5</button>
+      <button data-value="6">6</button>
+      <button data-value="-">−</button>
+
+      <button data-value="1">1</button>
+      <button data-value="2">2</button>
+      <button data-value="3">3</button>
+      <button data-value="=">=</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+    let currentInput = '';
+    let lastResult = null;
+
+    function calculate(expression) {
+      try {
+        // Replace the minus sign character '−' with normal minus '-'
+        expression = expression.replace(/−/g, '-');
+        // Evaluate expression safely
+        // Only allow digits, +, -, *, /, and decimal points
+        if (/^[0-9+\-*/. ]+$/.test(expression)) {
+          // eslint-disable-next-line no-eval
+          return eval(expression);
+        }
+        return null;
+      } catch {
+        return null;
+      }
+    }
+
+    function updateDisplay(value) {
+      display.textContent = value;
+    }
+
+    document.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', () => {
+        const val = button.getAttribute('data-value');
+
+        if (val === '=') {
+          if (currentInput.trim() === '') return;
+          const result = calculate(currentInput);
+          if (result !== null && result !== undefined) {
+            updateDisplay(result);
+            currentInput = result.toString();
+            lastResult = result;
+          } else {
+            updateDisplay('Error');
+            currentInput = '';
+          }
+        } else {
+          // Append value to current input
+          currentInput += val;
+          updateDisplay(currentInput);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

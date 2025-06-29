@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Creative Digital Agency - Landing Page</title>
+  <style>
+    /* Reset and base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.5;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+      height: auto;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    /* Utility */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .flex {
+      display: flex;
+      align-items: center;
+    }
+    .justify-between {
+      justify-content: space-between;
+    }
+    .justify-center {
+      justify-content: center;
+    }
+    .items-center {
+      align-items: center;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .uppercase {
+      text-transform: uppercase;
+    }
+    .bold {
+      font-weight: 700;
+    }
+    .border-radius-sm {
+      border-radius: 4px;
+    }
+    .button-primary {
+      background: #eb348a;
+      color: #fff;
+      padding: 0.7em 1.6em;
+      border-radius: 24px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      transition: background-color 0.3s ease;
+      user-select:none;
+    }
+    .button-primary:hover,
+    .button-primary:focus {
+      background: #c8286f;
+      outline: none;
+    }
+    .button-outline {
+      border: 2px solid #999;
+      color: #666;
+      padding: 0.7em 1.8em;
+      border-radius: 24px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      user-select:none;
+    }
+    .button-outline:hover,
+    .button-outline:focus {
+      border-color: #eb348a;
+      color: #eb348a;
+      outline: none;
+    }
+    /* Scrollbar for slider dots container */
+    .slider-dots {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: absolute;
+      right: 30px;
+      top: 45%;
+      transform: translateY(-50%);
+      z-index: 12;
+    }
+    .slider-dot {
+      width: 12px;
+      height: 12px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      background-color: transparent;
+      cursor: pointer;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    .slider-dot.active {
+      background-color: #eb348a;
+      border-color: #eb348a;
+    }
+    /* Top Info Bar */
+    header.top-info {
+      background: linear-gradient(90deg, #f18b11, #eb348a);
+      color: #fff;
+      font-weight: 500;
+      font-size: 0.85rem;
+      padding: 0.35rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      user-select:none;
+    }
+    header.top-info .left,
+    header.top-info .right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    header.top-info .left span,
+    header.top-info .right span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    header.top-info .icon {
+      width: 16px;
+      height: 16px;
+      fill: white;
+      flex-shrink: 0;
+    }
+    header.top-info .request-btn {
+      background: #fff;
+      color: #eb348a;
+      font-weight: 700;
+      padding: 0.3rem 1rem;
+      border-radius: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      user-select:none;
+      white-space: nowrap;
+      box-shadow: 0 0 6px rgb(235 52 138 / 0.5);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    header.top-info .request-btn:hover,
+    header.top-info .request-btn:focus {
+      background: #d82b76;
+      color: #fff;
+      outline: none;
+    }
+    /* Navigation Bar */
+    nav.navbar {
+      background: #fff;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 0.07);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav.navbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    nav.navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #eb348a;
+      user-select:none;
+    }
+    nav.navbar .logo svg {
+      width: 30px;
+      height: 30px;
+      fill: #eb348a;
+      flex-shrink: 0;
+    }
+    nav.navbar ul.menu {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      padding-left: 0;
+      margin: 0;
+      flex-wrap: wrap;
+      user-select:none;
+    }
+    nav.navbar ul.menu li a {
+      color: #444;
+      font-weight: 600;
+      padding: 0.6rem 0;
+      border-bottom: 3px solid transparent;
+      transition: border-color 0.3s ease;
+      white-space: nowrap;
+      user-select:none;
+    }
+    nav.navbar ul.menu li a:hover,
+    nav.navbar ul.menu li a:focus {
+      border-color: #eb348a;
+      outline: none;
+    }
+    nav.navbar .buy-now-btn {
+      background: #faaf19;
+      color: #2f2f2f;
+      border-radius: 24px;
+      font-weight: 700;
+      padding: 0.6rem 1.5rem;
+      box-shadow: 0 0 6px rgb(250 175 25 / 0.5);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select:none;
+      white-space: nowrap;
+    }
+    nav.navbar .buy-now-btn:hover,
+    nav.navbar .buy-now-btn:focus {
+      background: #d48f00;
+      color: #111;
+      outline: none;
+    }
+    nav.navbar .search-wrapper {
+      position: relative;
+      width: 180px;
+    }
+    nav.navbar .search-wrapper input[type="search"] {
+      padding: 0.45em 2.5em 0.45em 0.75em;
+      width: 100%;
+      border-radius: 24px;
+      border: 2px solid #eee;
+      font-size: 0.9rem;
+      transition: border-color 0.3s ease;
+      user-select:none;
+    }
+    nav.navbar .search-wrapper input[type="search"]:focus {
+      outline: none;
+      border-color: #eb348a;
+    }
+    nav.navbar .search-wrapper svg {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      width: 16px;
+      height: 16px;
+      fill: #eb348a;
+      pointer-events: none;
+      transform: translateY(-50%);
+      user-select:none;
+    }
+    /* Hero Section */
+    section.hero {
+      position: relative;
+      overflow: hidden;
+      background-image: url('https://www.shutterstock.com/shutterstock/photos/1498583432/display_1500/stock-photo-close-up-top-view-of-young-business-people-putting-their-hands-together-stack-of-hands-unity-and-1498583432.jpg');
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      height: 600px;
+      display: flex;
+      align-items: center;
+      color: #fff;
+      font-weight: 600;
+    }
+    section.hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(255 138 88 / 0.85) 0%, rgba(235 52 138 / 0.85) 100%);
+      mix-blend-mode: multiply;
+      z-index: 0;
+    }
+    .hero .container {
+      position: relative;
+      z-index: 5;
+      max-width: 900px;
+    }
+    .hero p.hero-small-text {
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin: 0 0 0.4rem;
+      user-select:none;
+      opacity: 0.75;
+    }
+    .hero h1 {
+      font-weight: 700;
+      font-size: 2.9rem;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      user-select:none;
+    }
+    .hero h1 strong {
+      color: #feb15f;
+    }
+    .hero p.hero-description {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      user-select:none;
+    }
+    .hero .hero-buttons {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .hero .hero-buttons .btn-read-more {
+      background: #eb348a;
+      padding: 0.65em 1.6em;
+      border-radius: 24px;
+      color: white;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      border: none;
+      user-select:none;
+      box-shadow: 0 0 8px rgb(235 52 138 / 0.7);
+      transition: background-color 0.3s ease;
+    }
+    .hero .hero-buttons .btn-read-more:hover,
+    .hero .hero-buttons .btn-read-more:focus {
+      background: #c8286f;
+      outline: none;
+    }
+    .hero .hero-buttons .btn-request {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+      border-radius: 24px;
+      padding: 0.6em 1.6em;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+      user-select:none;
+    }
+    .hero .hero-buttons .btn-request:hover,
+    .hero .hero-buttons .btn-request:focus {
+      background-color: white;
+      color: #eb348a;
+      border-color: #eb348a;
+      outline: none;
+    }
+    /* Hero side dots */
+    .hero .slider-dots {
+      position: absolute;
+      top: 50%;
+      right: 1.5rem;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 10;
+      user-select:none;
+    }
+    .hero .slider-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .hero .slider-dot.active {
+      background-color: #eb348a;
+      border-color: #eb348a;
+    }
+    /* Features Section */
+    section.features {
+      background: linear-gradient(90deg, #f18b11 0%, #eb348a 100%);
+      color: #fff;
+      padding: 2.5rem 1.5rem;
+      user-select:none;
+    }
+    section.features .container {
+      max-width: 1100px;
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    section.features .feature-item {
+      flex: 1 1 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      background: rgba(255 255 255 / 0.14);
+      box-shadow: 0 0 10px rgb(255 255 255 / 0.06);
+      user-select:none;
+    }
+    section.features .feature-item svg {
+      width: 40px;
+      height: 40px;
+      fill: #fff;
+      margin-bottom: 0.5rem;
+      flex-shrink: 0;
+    }
+    section.features .feature-item h3 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.1rem;
+      user-select:none;
+    }
+    section.features .feature-item p {
+      font-weight: 400;
+      font-size: 0.92rem;
+      text-align: center;
+      line-height: 1.4;
+      user-select:none;
+    }
+    /* About Us Section */
+    section.about {
+      padding: 4rem 1.5rem 3.5rem;
+      background: white;
+    }
+    section.about .container {
+      max-width: 1100px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      align-items: center;
+      user-select:none;
+    }
+    section.about .about-text {
+      flex: 1 1 560px;
+      font-weight: 500;
+    }
+    section.about .about-text h2 {
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      font-size: 1.8rem;
+      user-select:none;
+    }
+    section.about .about-text strong {
+      display: block;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: #eb348a;
+      user-select:none;
+    }
+    section.about .about-text p {
+      margin-bottom: 1.8rem;
+      line-height: 1.5;
+      color: #444;
+      user-select:none;
+    }
+    section.about .about-text .btn-about-readmore {
+      background: #eb348a;
+      padding: 0.65em 1.5em;
+      border-radius: 24px;
+      color: white;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      border: none;
+      user-select:none;
+      display: inline-block;
+      box-shadow: 0 0 8px rgb(235 52 138 / 0.7);
+      transition: background-color 0.3s ease;
+    }
+    section.about .about-text .btn-about-readmore:hover,
+    section.about .about-text .btn-about-readmore:focus {
+      background: #c8286f;
+      outline: none;
+    }
+    section.about .about-image {
+      flex: 1 1 430px;
+      position: relative;
+      user-select:none;
+    }
+    section.about .about-image img {
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgb(235 52 138 / 0.3);
+      max-width: 100%;
+    }
+    section.about .rectangle-outline {
+      position: absolute;
+      border: 3px solid #eb348a;
+      width: 140px;
+      height: 90px;
+      bottom: 15%;
+      right: 12%;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    /* Services Section */
+    section.services {
+      padding: 3rem 1.5rem 4rem;
+      background: repeating-conic-gradient(#eee 0% 1%, #fff 1% 3%);
+      user-select:none;
+    }
+    section.services .container {
+      max-width: 1100px;
+    }
+    section.services h2 {
+      font-weight: 700;
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+      user-select:none;
+    }
+    section.services .service-cards {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    section.services .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+      max-width: 300px;
+      flex: 1 1 280px;
+      overflow: hidden;
+      user-select:none;
+      transition: box-shadow 0.3s ease;
+    }
+    section.services .card:hover,
+    section.services .card:focus-within {
+      box-shadow: 0 6px 16px rgb(235 52 138 / 0.4);
+      outline: none;
+    }
+    section.services .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-bottom: 3px solid #eb348a;
+    }
+    section.services .card-content {
+      padding: 1rem 1rem 1.3rem;
+    }
+    section.services .card-content h3 {
+      margin: 0 0 0.5rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      user-select:none;
+    }
+    section.services .card-content .icon-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #eb348a;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      user-select:none;
+      box-shadow: 0 0 6px rgb(235 52 138 / 0.5);
+    }
+    /* Responsive */
+    @media (max-width: 1024px) {
+      nav.navbar .container {
+        justify-content: center;
+        gap: 1rem;
+      }
+      nav.navbar ul.menu {
+        gap: 1rem;
+      }
+      section.about .container,
+      section.features .container,
+      section.services .container {
+        flex-direction: column;
+        align-items: center;
+      }
+      section.about .about-text,
+      section.about .about-image {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+      section.features .feature-item {
+        flex: 1 1 100%;
+        max-width: 350px;
+        margin: 0 auto;
+      }
+      section.services .service-cards {
+        gap: 1.2rem;
+      }
+      section.services .card {
+        max-width: 100%;
+      }
+    }
+    @media (max-width: 480px) {
+      header.top-info {
+        font-size: 0.75rem;
+        padding: 0.25rem 1rem;
+        justify-content: center;
+        text-align: center;
+      }
+      nav.navbar .search-wrapper {
+        width: 140px;
+      }
+      section.hero {
+        height: 480px;
+      }
+      section.hero h1 {
+        font-size: 2rem;
+      }
+      section.hero p.hero-description {
+        font-size: 0.9rem;
+      }
+      section.features .feature-item h3 {
+        font-size: 1rem;
+      }
+      section.about .about-text h2 {
+        font-size: 1.5rem;
+      }
+      section.services h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Info Bar -->
+  <header class="top-info" aria-label="Contact and social information">
+    <div class="left" aria-label="Social media links">
+      <a href="#" aria-label="Twitter" tabindex="0" style="display:flex;align-items:center;">
+        <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M23.954 4.569c-0.885 0.392-1.83 0.656-2.825 0.775 1.014-0.608 1.794-1.574 2.163-2.724-0.951 0.563-2.005 0.974-3.127 1.195-0.897-0.957-2.178-1.555-3.594-1.555-2.72 0-4.924 2.204-4.924 4.923 0 0.39 0.045 0.765 0.127 1.124-4.09-0.205-7.719-2.164-10.148-5.144-0.424 0.729-0.666 1.577-0.666 2.476 0 1.71 0.87 3.216 2.188 4.099-0.807-0.026-1.566-0.247-2.228-0.616v0.062c0 2.388 1.698 4.381 3.954 4.831-0.414 0.112-0.849 0.171-1.296 0.171-0.317 0-0.625-0.03-0.927-0.086 0.626 1.956 2.444 3.379 4.6 3.419-1.68 1.317-3.808 2.102-6.115 2.102-0.398 0-0.79-0.023-1.176-0.069 2.179 1.397 4.768 2.213 7.548 2.213 9.056 0 14.012-7.506 14.012-14.012 0-0.213-0.005-0.425-0.014-0.636 0.961-0.694 1.8-1.562 2.462-2.549z"/></svg>
+      </a>
+      <a href="#" aria-label="Facebook" tabindex="0" style="display:flex;align-items:center;">
+        <svg class="icon" aria-hidden="true" focusable="false"  viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-0.733 0-1.324 0.591-1.324 1.324v21.351c0 0.732 0.591 1.324 1.324 1.324h11.481v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.464 0.099 2.795 0.143v3.24l-1.918 0.001c-1.504 0-1.794 0.715-1.794 1.762v2.312h3.587l-0.467 3.622h-3.12v9.294h6.116c0.73 0 1.324-0.591 1.324-1.324v-21.35c0-0.733-0.594-1.324-1.324-1.324z"/></svg>
+      </a>
+      <a href="#" aria-label="Youtube" tabindex="0" style="display:flex;align-items:center;">
+        <svg class="icon" aria-hidden="true" focusable="false"  viewBox="0 0 24 24"><path d="M19.615 3.184c-0.983-0.626-4.488-0.625-4.488-0.625s-3.506-0.001-4.488 0.625c-0.951 0.605-1.366 1.614-1.447 2.983-0.072 1.198-0.073 3.875-0.073 3.875s0 2.677 0.073 3.875c0.081 1.369 0.496 2.377 1.447 2.983 0.983 0.626 4.488 0.625 4.488 0.625s3.506 0.001 4.488-0.625c0.951-0.605 1.366-1.614 1.447-2.983 0.072-1.198 0.073-3.875 0.073-3.875s0-2.677-0.073-3.875c-0.081-1.369-0.496-2.377-1.447-2.983v0zm0 7.738l-5.872 3.416-5.872-3.416v-6.934l5.872 3.416 5.872-3.416v6.934z"/></svg>
+      </a>
+      <a href="#" aria-label="Pinterest" tabindex="0" style="display:flex;align-items:center;">
+        <svg class="icon" aria-hidden="true" focusable="false"  viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12 0 5.463 3.834 10.008 9 11.534-0.039-0.968-0.007-2.131 0.249-3.23 0.271-1.15 1.75-7.763 1.75-7.763s-0.442-0.885-0.442-2.193c0-2.053 1.189-3.588 2.669-3.588 1.259 0 1.866 0.944 1.866 2.075 0 1.264-0.807 3.154-1.22 4.911-0.347 1.47 0.736 2.664 2.184 2.664 2.62 0 4.386-3.305 4.386-7.2 0-2.958-2.005-5.035-5.867-5.035-4.249 0-6.897 3.181-6.897 6.464 0 1.281 0.49 2.657 1.102 3.404 0.123 0.15 0.141 0.281 0.107 0.437-0.117 0.485-0.38 1.535-0.43 1.752-0.068 0.328-0.222 0.399-0.516 0.241-1.917-0.891-3.11-3.69-3.11-5.947 0-4.76 3.46-9.128 10-9.128 5.243 0 9.303 3.781 9.303 8.82 0 5.256-3.334 9.504-7.972 9.504-1.556 0-3.02-0.808-3.523-1.741 0 0-0.835 3.184-1.026 3.91-0.311 1.19-0.916 2.38-1.47 3.315 1.204 0.371 2.483 0.572 3.808 0.572 6.627 0 12-5.373 12-12s-5.374-12-12-12z"/></svg>
+      </a>
+      <a href="#" aria-label="LinkedIn" tabindex="0" style="display:flex;align-items:center;">
+        <svg class="icon" aria-hidden="true" focusable="false"  viewBox="0 0 24 24"><path d="M20.447 20.452h-3.678v-5.569c0-1.328-0.026-3.038-1.854-3.038-1.857 0-2.141 1.445-2.141 2.94v5.667h-3.676v-11.48h3.527v1.569h0.049c0.492-0.93 1.69-1.908 3.478-1.908 3.721 0 4.41 2.448 4.41 5.627v6.192zm-15.575-13.133c-1.182 0-2.14-0.958-2.14-2.14s0.958-2.14 2.14-2.14c1.183 0 2.14 0.958 2.14 2.14s-0.957 2.14-2.14 2.14zm1.839 13.133h-3.679v-11.48h3.679v11.48zm16.005-20.452h-18.009c-1.104 0-2 0.896-2 2v20c0 1.104 0.896 2 2 2h18.009c1.104 0 2-0.896 2-2v-20c0-1.104-0.896-2-2-2z"/></svg>
+      </a>
+    </div>
+    <div class="right">
+      <span aria-label="Phone number" title="+12-345-7890">+12-345-7890</span>
+      <span aria-label="Email address" title="demolanding@gmail.com">demolanding@gmail.com</span>
+      <a href="#" class="request-btn" tabindex="0">Request A Consult</a>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="navbar" aria-label="Primary navigation">
+    <div class="container" role="navigation">
+      <a href="#" class="logo" aria-label="Landing Page Logo">
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor">
+          <rect width="24" height="24" rx="5" ry="5" fill="#eb348a"></rect>
+          <path fill="#fff" d="M7 17h10v-2H9v-2h7a1 1 0 000-2H9v-2h8v2h-6v2h7a1 1 0 110 2H7v2z"/>
+        </svg>
+        Landing Page
+      </a>
+      <ul class="menu" role="menubar" aria-label="Main menu">
+        <li role="none"><a href="#" role="menuitem" tabindex="0">Home</a></li>
+        <li role="none"><a href="#" role="menuitem" tabindex="-1">Blog</a></li>
+        <li role="none"><a href="#" role="menuitem" tabindex="-1">Page</a></li>
+        <li role="none"><a href="#" role="menuitem" tabindex="-1">Services</a></li>
+        <li role="none"><a href="#" role="menuitem" tabindex="-1">Testimonials</a></li>
+        <li role="none"><a href="#" role="menuitem" tabindex="-1">Contact</a></li>
+      </ul>
+      <a href="#" class="buy-now-btn" tabindex="0" aria-label="Buy Now">Buy Now</a>
+      <div class="search-wrapper" role="search" aria-label="Site search">
+        <input type="search" placeholder="Search..." aria-label="Search site" />
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M20.71 19.29l-5.4-5.39a7.5 7.5 0 10-1.42 1.42l5.39 5.39 1.42-1.42zM10 16a6 6 0 116-6 6.006 6.006 0 01-6 6z"/></svg>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" aria-label="Hero introduction">
+    <div class="container">
+      <p class="hero-small-text" aria-hidden="true">WE ARE CREATIVE</p>
+      <h1><strong>Creative Digital Agency</strong></h1>
+      <p class="hero-description">Lorem Ipsum has been the industry's standard dummy text ever since the 1500 when an unknown printer took a galley of type and scrambled it to</p>
+      <div class="hero-buttons" role="group" aria-label="Hero Call to Action buttons">
+        <button class="btn-read-more" type="button">Read More</button>
+        <button class="btn-request" type="button">Request A Consult</button>
+        <button class="button-outline" type="button" disabled aria-disabled="true">Consult</button>
+      </div>
+    </div>
+    <div class="slider-dots" role="tablist" aria-label="Hero slider navigation">
+      <button class="slider-dot active" role="tab" aria-selected="true" tabindex="0" aria-label="Slide 1"></button>
+      <button class="slider-dot" role="tab" aria-selected="false" tabindex="-1" aria-label="Slide 2"></button>
+      <button class="slider-dot" role="tab" aria-selected="false" tabindex="-1" aria-label="Slide 3"></button>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" aria-label="Features of the service">
+    <div class="container">
+      <article class="feature-item" tabIndex="0" aria-labelledby="feature1title" role="article">
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" >
+          <path d="M12 2a10 10 0 1010 10A10.011 10.011 0 0012 2zm1 14.5h-2v-2h2zm0-3h-2V7h2z"/>
+        </svg>
+        <h3 id="feature1title">Launch Business</h3>
+        <p>Lorem Ipsum has been the industrys standard dummy text</p>
+      </article>
+      <article class="feature-item" tabIndex="0" aria-labelledby="feature2title" role="article">
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+          <path d="M12 22a9.979 9.979 0 007.071-2.929A9.979 9.979 0 0022 12a9.979 9.979 0 00-2.929-7.071A9.979 9.979 0 0012 2a9.979 9.979 0 00-7.071 2.929A9.979 9.979 0 002 12a9.978 9.978 0 002.929 7.071A9.978 9.978 0 0012 22z"/>
+        </svg>
+        <h3 id="feature2title">Online Support Team</h3>
+        <p>Lorem Ipsum has been the industrys standard dummy text</p>
+      </article>
+      <article class="feature-item" tabIndex="0" aria-labelledby="feature3title" role="article">
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+          <path d="M12 8a4 4 0 100 8 4 4 0 000-8zm0-6a10 10 0 1010 10A10.011 10.011 0 0012 2z"/>
+        </svg>
+        <h3 id="feature3title">Time Management</h3>
+        <p>Lorem Ipsum has been the industrys standard dummy text</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section class="about" aria-labelledby="aboutTitle">
+    <div class="container">
+      <div class="about-text">
+        <h2 id="aboutTitle">About Us</h2>
+        <strong>15 years, we passionate about achieving better results for our clients</strong>
+        <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500 when an unknown printer took a galley Lorem Ipsum has been the industry's standard dummy text ever since the 1500 when an unknown printer took a galley Lorem Ipsum has been the industrys standard dummy text ever since the 1500 when an unknown printer took a galley Lorem Ipsum has been the industrys standard dummy text ever since the 1500 when an unknown printer took a galley Lorem Ipsum has been the industry's standard dummy text ever since the 1500 when an unknown printer took a galley Lorem Ipsum has been the industry's standard dummy text ever since the 1500.</p>
+        <button class="btn-about-readmore" type="button">Read More</button>
+      </div>
+      <div class="about-image" aria-hidden="true">
+        <img src="https://www.shutterstock.com/shutterstock/photos/2161819863/display_1500/stock-photo-businessman-using-laptop-computer-in-office-happy-middle-aged-man-entrepreneur-small-business-2161819863.jpg" alt="Smiling professional man in business suit looking upwards thoughtfully with hand on chin, studio style" onerror="this.style.display='none';" />
+        <div class="rectangle-outline" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services" aria-labelledby="servicesTitle">
+    <div class="container">
+      <h2 id="servicesTitle">Our Services</h2>
+      <div class="service-cards">
+        <article class="card" tabIndex="0" role="article" aria-label="User Experience Service">
+          <img src="https://www.shutterstock.com/shutterstock/photos/2475065077/display_1500/stock-photo-business-related-meeting-asian-business-team-discusses-strategy-for-starting-a-financial-process-2475065077.jpg" alt="Top view of a table with people collaborating with charts, laptops, tablets, and notes" onerror="this.style.display='none';" />
+          <div class="card-content">
+            <div class="icon-circle" aria-hidden="true">✈</div>
+            <h3>User Experience</h3>
+          </div>
+        </article>
+        <article class="card" tabIndex="0" role="article" aria-label="Creative Design Service">
+          <img src="https://www.shutterstock.com/shutterstock/photos/2231746647/display_1500/stock-photo-portrait-of-a-happy-successful-businesswoman-using-laptop-computer-in-creative-agency-in-the-2231746647.jpg" alt="A woman sitting at a desk in a creative workspace, working on a computer with a graphic design software open" onerror="this.style.display='none';" />
+          <div class="card-content">
+            <div class="icon-circle" aria-hidden="true">✂</div>
+            <h3>Creative Design</h3>
+          </div>
+        </article>
+        <article class="card" tabIndex="0" role="article" aria-label="Retina Ready Service">
+          <img src="https://www.shutterstock.com/shutterstock/photos/387667975/display_1500/stock-photo-high-resolution-planet-earth-view-the-world-globe-from-space-in-a-star-field-showing-the-terrain-387667975.jpg" alt="High-resolution digital design elements displayed on multiple screens and devices" onerror="this.style.display='none';" />
+          <div class="card-content">
+            <div class="icon-circle" aria-hidden="true">S</div>
+            <h3>Retina Ready</h3>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+  
+</body>
+</html>
+
